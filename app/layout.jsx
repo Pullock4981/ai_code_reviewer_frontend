@@ -1,0 +1,44 @@
+import "./globals.css";
+import { HistoryProvider } from "../context/HistoryContext";
+import Link from "next/link";
+
+export const metadata = {
+  title: "AI Code Reviewer",
+  description: "AI-powered code review for technical instructors",
+};
+
+export default function RootLayout({ children }) {
+  return (
+    <html lang="en">
+      <body>
+        <HistoryProvider>
+          {/* Header */}
+          <header className="bg-[#1F4E79] text-white px-6 py-3 flex items-center justify-between shadow-md">
+            <Link href="/" className="flex items-center gap-3">
+              <div className="w-8 h-8 bg-[#2E75B6] rounded-lg flex items-center justify-center font-bold text-sm">
+                AI
+              </div>
+              <span className="font-semibold text-lg tracking-tight">
+                Code Reviewer
+              </span>
+            </Link>
+            <nav className="flex items-center gap-6 text-sm">
+              <Link href="/" className="hover:text-blue-300 transition-colors">
+                Review
+              </Link>
+              <Link
+                href="/history"
+                className="hover:text-blue-300 transition-colors"
+              >
+                History
+              </Link>
+            </nav>
+          </header>
+
+          {/* Page content */}
+          <main className="min-h-[calc(100vh-52px)]">{children}</main>
+        </HistoryProvider>
+      </body>
+    </html>
+  );
+}
