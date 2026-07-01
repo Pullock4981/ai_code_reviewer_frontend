@@ -35,6 +35,14 @@ export default function RootLayout({ children }) {
             </nav>
           </header>
 
+          {/* Global Notification Banner */}
+          <div className="bg-amber-50 border-b border-amber-200 px-6 py-2 text-center shadow-sm">
+            <p className="text-sm font-medium text-amber-800">
+              <span className="mr-2">📢</span>
+              Welcome to <span className="font-bold">Version 1.0!</span> Currently, we only support <strong>HTML, CSS, and JavaScript</strong>. More languages will be added soon!
+            </p>
+          </div>
+
           {/* Page content */}
           <main className="min-h-[calc(100vh-52px)]">{children}</main>
         </HistoryProvider>

@@ -25,6 +25,21 @@ export default function ReviewParameters({ params, setParams }) {
         Review Parameters
       </p>
 
+      {/* Custom instructions (Highlighted & at the top) */}
+      <div className="bg-blue-50/50 p-3 rounded-xl border border-blue-200 shadow-sm">
+        <label className="text-xs text-blue-700 font-bold block mb-2 uppercase tracking-wide flex items-center gap-1">
+          <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4" /></svg>
+          Custom Instructions / Rubric
+        </label>
+        <textarea
+          rows={5}
+          value={params.customInstructions}
+          onChange={(e) => set("customInstructions", e.target.value)}
+          placeholder="Paste your Figma checklist, functional requirements, or specific things to check here..."
+          className="w-full border border-blue-300 rounded-lg px-3 py-2 text-sm bg-white focus:outline-none focus:ring-2 focus:ring-blue-500 resize-y"
+        />
+      </div>
+
       {/* Row 1 — Level + Depth */}
       <div className="grid grid-cols-2 gap-3">
         <div>
@@ -110,17 +125,7 @@ export default function ReviewParameters({ params, setParams }) {
         />
       </div>
 
-      {/* Custom instructions */}
-      <div>
-        <label className="text-xs text-gray-500 font-medium block mb-1">Custom Instructions</label>
-        <textarea
-          rows={2}
-          value={params.customInstructions}
-          onChange={(e) => set("customInstructions", e.target.value)}
-          placeholder="Any specific things to check? (optional)"
-          className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-400 resize-none"
-        />
-      </div>
+
     </div>
   );
 }
