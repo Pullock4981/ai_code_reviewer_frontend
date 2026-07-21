@@ -22,6 +22,7 @@ const DEFAULT_INPUT = {
   activeTab:   "paste",
   code:        "",
   githubUrl:   "",
+  liveUrl:     "",
   accessToken: "",
   filename:    "",
 };
@@ -62,7 +63,7 @@ export default function HomePage() {
 
   const buildPayload = () => {
     const reviewParameters = { ...params };
-    const { activeTab, code, githubUrl, accessToken } = input;
+    const { activeTab, code, githubUrl, liveUrl, accessToken } = input;
 
     if (activeTab === "paste" || activeTab === "file") {
       return { type: "code", payload: { code, reviewParameters } };
@@ -73,15 +74,21 @@ export default function HomePage() {
     if (activeTab === "github_repo") {
       return { type: "github_repo", payload: { repositoryUrl: githubUrl, accessToken: accessToken || undefined, reviewParameters } };
     }
+    if (activeTab === "live_url") {
+      return { type: "ui_review", payload: { liveUrl, reviewParameters } };
+    }
   };
 
   const validate = () => {
-    const { activeTab, code, githubUrl } = input;
+    const { activeTab, code, githubUrl, liveUrl } = input;
     if ((activeTab === "paste" || activeTab === "file") && !code.trim()) {
       return "Please paste or upload code to review.";
     }
     if ((activeTab === "github_file" || activeTab === "github_repo") && !githubUrl.trim()) {
       return "Please enter a GitHub URL.";
+    }
+    if (activeTab === "live_url" && !liveUrl?.trim()) {
+      return "Please enter a live website URL.";
     }
     return null;
   };
@@ -107,8 +114,13 @@ export default function HomePage() {
         setResultType("single");
       }
       if (type === "github_repo") {
-        data = await reviewGithubRepo(payload); // ✅ Fixed — API now actually called
+        data = await reviewGithubRepo(payload);
         setResultType("repo");
+      }
+      if (type === "ui_review") {
+        const { reviewUI } = require("../lib/api");
+        data = await reviewUI(payload);
+        setResultType("single");
       }
 
       setResult(data);
